@@ -1,4 +1,4 @@
-FROM buildpack-deps:sid
+FROM buildpack-deps:stretch
 
 RUN sed -i 's/archive.ubuntu.com/mirror.aarnet.edu.au\/pub\/ubuntu\/archive/g' /etc/apt/sources.list
 
@@ -226,7 +226,7 @@ RUN SRTP="2.3.0" && apt-get remove -y libsrtp0-dev && wget https://github.com/ci
 
 
 
-# 2 March, 2020 1 commit a9c2846a89c4e74efbd7ef59fcfe7ff05efb2c5e
+# tag 0.1.16 commit 5969b34e3acd9150506ed8d9d109c73665858f3e
 RUN apt-get remove -y libnice-dev libnice10 && \
     echo "deb http://deb.debian.org/debian  stretch-backports main" >> /etc/apt/sources.list && \
     apt-get  update && \
