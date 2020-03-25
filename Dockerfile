@@ -46,7 +46,7 @@ RUN YASM="1.3.0" && cd ~/ffmpeg_sources && \
     make install && \
     make distclean
 
-RUN VPX="v1.8.1" && cd ~/ffmpeg_sources && \
+RUN VPX="v1.8.2" && cd ~/ffmpeg_sources && \
     wget https://chromium.googlesource.com/webm/libvpx/+archive/$VPX.tar.gz && \
     tar xzvf $VPX.tar.gz && \
     pwd \
@@ -57,7 +57,7 @@ RUN VPX="v1.8.1" && cd ~/ffmpeg_sources && \
     make clean
 
 
-RUN OPUS="1.3" && cd ~/ffmpeg_sources && \
+RUN OPUS="1.3.1" && cd ~/ffmpeg_sources && \
     wget http://downloads.xiph.org/releases/opus/opus-$OPUS.tar.gz && \
     tar xzvf opus-$OPUS.tar.gz && \
     cd opus-$OPUS && \
@@ -76,10 +76,10 @@ RUN LAME="3.100" && apt-get install -y nasm  && cd ~/ffmpeg_sources && \
     make && \
     make install
 
-RUN X264="20181001-2245-stable" && cd ~/ffmpeg_sources && \
-    wget http://download.videolan.org/pub/x264/snapshots/x264-snapshot-$X264.tar.bz2 && \
-    tar xjvf x264-snapshot-$X264.tar.bz2 && \
-    cd x264-snapshot-$X264 && \
+RUN cd ~/ffmpeg_sources && \
+    wget https://code.videolan.org/videolan/x264/-/archive/stable/x264-stable.tar.bz2 && \
+    tar xjvf x264-stable.tar.bz2 && \
+    cd x264-stable && \
     PATH="$HOME/bin:$PATH" ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" --enable-static --disable-opencl --disable-asm && \
     PATH="$HOME/bin:$PATH" make && \
     make install && \
@@ -95,11 +95,11 @@ RUN FDK_AAC="2.0.1" && cd ~/ffmpeg_sources && \
     make install && \
     make distclean
 
-RUN FFMPEG_VER="n4.2.1" && cd ~/ffmpeg_sources && \
+RUN FFMPEG_VER="n4.2.2" && cd ~/ffmpeg_sources && \
     wget https://github.com/FFmpeg/FFmpeg/archive/$FFMPEG_VER.zip && \
     unzip $FFMPEG_VER.zip
 
-RUN FFMPEG_VER="n4.2.1" && cd ~/ffmpeg_sources && \
+RUN FFMPEG_VER="n4.2.2" && cd ~/ffmpeg_sources && \
     cd FFmpeg-$FFMPEG_VER && \
     PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
     --prefix="$HOME/ffmpeg_build" \
@@ -147,7 +147,7 @@ RUN ZLIB="zlib-1.2.11" && vNGRTMP="v1.1.11" && PCRE="8.41" && nginx_build=/root/
     tar zxf $vNGRTMP.tar.gz && mv nginx-rtmp-module-* nginx-rtmp-module
 
 
-RUN OPENRESTY="1.13.6.2" && ZLIB="zlib-1.2.11" && PCRE="pcre-8.41" &&  openresty_build=/root/openresty && mkdir $openresty_build && \
+RUN OPENRESTY="1.15.8.2" && ZLIB="zlib-1.2.11" && PCRE="pcre-8.41" &&  openresty_build=/root/openresty && mkdir $openresty_build && \
     wget https://openresty.org/download/openresty-$OPENRESTY.tar.gz && \
     tar zxf openresty-$OPENRESTY.tar.gz && \
     cd openresty-$OPENRESTY && \
@@ -209,7 +209,7 @@ RUN git clone https://boringssl.googlesource.com/boringssl && \
     sudo cp build/crypto/libcrypto.a /opt/boringssl/lib/
 
 
-RUN LIBWEBSOCKET="3.1.0" && wget https://github.com/warmcat/libwebsockets/archive/v$LIBWEBSOCKET.tar.gz && \
+RUN LIBWEBSOCKET="3.2.2" && wget https://github.com/warmcat/libwebsockets/archive/v$LIBWEBSOCKET.tar.gz && \
     tar xzvf v$LIBWEBSOCKET.tar.gz && \
     cd libwebsockets-$LIBWEBSOCKET && \
     mkdir build && \
@@ -218,7 +218,7 @@ RUN LIBWEBSOCKET="3.1.0" && wget https://github.com/warmcat/libwebsockets/archiv
     make && make install
 
 
-RUN SRTP="2.2.0" && apt-get remove -y libsrtp0-dev && wget https://github.com/cisco/libsrtp/archive/v$SRTP.tar.gz && \
+RUN SRTP="2.3.0" && apt-get remove -y libsrtp0-dev && wget https://github.com/cisco/libsrtp/archive/v$SRTP.tar.gz && \
     tar xfv v$SRTP.tar.gz && \
     cd libsrtp-$SRTP && \
     ./configure --prefix=/usr --enable-openssl && \
@@ -226,21 +226,21 @@ RUN SRTP="2.2.0" && apt-get remove -y libsrtp0-dev && wget https://github.com/ci
 
 
 
-# 8 March, 2019 1 commit 67807a17ce983a860804d7732aaf7d2fb56150ba
+# 2 March, 2020 1 commit a9c2846a89c4e74efbd7ef59fcfe7ff05efb2c5e
 RUN apt-get remove -y libnice-dev libnice10 && \
     echo "deb http://deb.debian.org/debian  stretch-backports main" >> /etc/apt/sources.list && \
     apt-get  update && \
     apt-get install -y gtk-doc-tools libgnutls28-dev -t stretch-backports  && \
     git clone https://gitlab.freedesktop.org/libnice/libnice.git && \
     cd libnice && \
-    git checkout 67807a17ce983a860804d7732aaf7d2fb56150ba && \
+    git checkout a9c2846a89c4e74efbd7ef59fcfe7ff05efb2c5e && \
     bash autogen.sh && \
     ./configure --prefix=/usr && \
     make && \
     make install
 
 
-RUN COTURN="4.5.0.8" && wget https://github.com/coturn/coturn/archive/$COTURN.tar.gz && \
+RUN COTURN="4.5.1.1" && wget https://github.com/coturn/coturn/archive/$COTURN.tar.gz && \
     tar xzvf $COTURN.tar.gz && \
     cd coturn-$COTURN && \
     ./configure && \
@@ -260,7 +260,7 @@ RUN COTURN="4.5.0.8" && wget https://github.com/coturn/coturn/archive/$COTURN.ta
 
 # datachannel build
 RUN cd / && git clone https://github.com/sctplab/usrsctp.git && cd /usrsctp && \
-    git checkout origin/master && git reset --hard 1c9c82fbe3582ed7c474ba4326e5929d12584005 && \
+    git checkout origin/master && git reset --hard 5876f9dd00007fe9fd42e23d449d6fdcb44f7926 && \
     ./bootstrap && \
     ./configure && \
     make && make install
@@ -269,7 +269,7 @@ RUN cd / && git clone https://github.com/sctplab/usrsctp.git && cd /usrsctp && \
 
 
 RUN cd / && git clone https://github.com/meetecho/janus-gateway.git && cd /janus-gateway && \
-    git checkout refs/tags/v0.9.0 && \
+    git checkout refs/tags/v0.9.1 && \
     sh autogen.sh &&  \
     PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
     --enable-post-processing \
